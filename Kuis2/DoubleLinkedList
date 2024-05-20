@@ -1,0 +1,91 @@
+public class DoubleLinkedList {
+    Node head, tail;
+
+    DoubleLinkedList() {
+        head = null;
+        tail = null;
+    }
+
+    void addClub(String clubName, int menang, int kalah, int seri) {
+        Node newNode = new Node(clubName, menang, kalah, seri);
+        if (head == null) {
+            head = tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+    }
+
+    void removeClub(String clubName) {
+        Node current = head;
+        while (current != null) {
+            if (current.clubName.equals(clubName)) {
+                if (current == head && current == tail) {
+                    head = tail = null;
+                } else if (current == head) {
+                    head = head.next;
+                    head.prev = null;
+                } else if (current == tail) {
+                    tail = tail.prev;
+                    tail.next = null;
+                } else {
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
+                }
+                return;
+            }
+            current = current.next;
+        }
+        System.out.println("Club tidak ditemukan.");
+    }
+
+    void listClubs() {
+        if (head == null) {
+            System.out.println("Tidak ada club dalam daftar.");
+            return;
+        }
+        Node current = head;
+        while (current != null) {
+            System.out.println("Club: " + current.clubName + ", Menang: " + current.menang + ", Kalah: " + current.kalah + ", Seri: " + current.seri + ", Skor: " + current.skor);
+            current = current.next;
+        }
+    }
+
+    void listClubsByScore() {
+        if (head == null) {
+            System.out.println("Tidak ada club dalam daftar.");
+            return;
+        }
+        // Convert to array for sorting
+        Node current = head;
+        int size = 0;
+        while (current != null) {
+            size++;
+            current = current.next;
+        }
+        
+        Node[] clubsArray = new Node[size];
+        current = head;
+        for (int i = 0; i < size; i++) {
+            clubsArray[i] = current;
+            current = current.next;
+        }
+
+        // Sort by score
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (clubsArray[j].skor < clubsArray[j + 1].skor) {
+                    Node temp = clubsArray[j];
+                    clubsArray[j] = clubsArray[j + 1];
+                    clubsArray[j + 1] = temp;
+                }
+            }
+        }
+
+        // Print sorted clubs
+        for (Node club : clubsArray) {
+            System.out.println("Club: " + club.clubName + ", Menang: " + club.menang + ", Kalah: " + club.kalah + ", Seri: " + club.seri + ", Skor: " + club.skor);
+        }
+    }
+}
