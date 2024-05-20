@@ -1,1 +1,16 @@
+public class Node {
+    String clubName;
+    int menang, kalah, seri, skor;
+    Node prev, next;
+
+    Node(String clubName, int menang, int kalah, int seri) {
+        this.clubName = clubName;
+        this.menang = menang;
+        this.kalah = kalah;
+        this.seri = seri;
+        this.skor = (menang * 3) + (seri * 1) + (kalah * 0);
+        this.prev = null;
+        this.next = null;
+    }
+}
 
