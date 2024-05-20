@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        DoubleLinkedList league = new DoubleLinkedList();
+
+        while (true) {
+            System.out.println("******************************************");
+            System.out.println("KLASEMEN ENGLAND LEAGUE PREMIER");
+            System.out.println("******************************************");
+            System.out.println("1. Tambah club");
+            System.out.println("2. Hapus club");
+            System.out.println("3. Daftar club");
+            System.out.println("4. Urutan Juara (dari skor tertinggi)");
+            System.out.println("5. Keluar");
+            System.out.println("******************************************");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.println("------------------------------------------------");
+                    System.out.println("Masukkan data club");
+                    System.out.println("------------------------------------------------");
+                    System.out.print("Nama Club: ");
+                    String clubName = scanner.nextLine();
+                    System.out.print("Menang: ");
+                    int menang = scanner.nextInt();
+                    System.out.print("Kalah: ");
+                    int kalah = scanner.nextInt();
+                    System.out.print("Seri: ");
+                    int seri = scanner.nextInt();
+                    league.addClub(clubName, menang, kalah, seri);
+                    break;
+                case 2:
+                    System.out.print("Masukkan nama club yang ingin dihapus: ");
+                    String removeName = scanner.nextLine();
+                    league.removeClub(removeName);
+                    break;
+                case 3:
+                    league.listClubs();
+                    break;
+                case 4:
+                    league.listClubsByScore();
+                    break;
+                case 5:
+                    System.out.println("Keluar...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+            }
+        }
+    }
+}
