@@ -23,14 +23,23 @@ public class BinaryTreeMain25 {
         bt.traversePostOrder(bt.root);
         System.out.println("");
 
-        System.out.println("Find Node: " + bt.find(5));
+        System.out.println("Find Node 5: " + bt.find(5));
+        
         System.out.println("Delete Node 8 ");
         bt.delete(8);
         System.out.println("");
 
-        System.out.print("PreOrder Traversal: ");
+        System.out.print("PreOrder Traversal after deletion: ");
         bt.traversePreOrder(bt.root);
         System.out.println("");
+
+        System.out.println("Minimum value in the tree: " + bt.findMin());
+        System.out.println("Maximum value in the tree: " + bt.findMax());
+
+        System.out.print("Leaf nodes in the tree: ");
+        bt.displayLeaves();
+        System.out.println("");
+
+        System.out.println("Number of leaf nodes in the tree: " + bt.countLeaves());
     }
 }
-
