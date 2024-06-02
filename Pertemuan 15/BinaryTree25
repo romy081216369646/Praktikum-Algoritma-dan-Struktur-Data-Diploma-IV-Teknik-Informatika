@@ -9,31 +9,21 @@ public class BinaryTree25 {
         return root == null;
     }
 
+    // Recursive add method
     void add(int data) {
-        if (isEmpty()) {
-            root = new Node25(data);
-        } else {
-            Node25 current = root;
-            while (true) {
-                if (data < current.data) {
-                    if (current.left != null) {
-                        current = current.left;
-                    } else {
-                        current.left = new Node25(data);
-                        break;
-                    }
-                } else if (data > current.data) {
-                    if (current.right != null) {
-                        current = current.right;
-                    } else {
-                        current.right = new Node25(data);
-                        break;
-                    }
-                } else {
-                    break;
-                }
-            }
+        root = addRecursive(root, data);
+    }
+
+    private Node25 addRecursive(Node25 current, int data) {
+        if (current == null) {
+            return new Node25(data);
         }
+        if (data < current.data) {
+            current.left = addRecursive(current.left, data);
+        } else if (data > current.data) {
+            current.right = addRecursive(current.right, data);
+        }
+        return current;
     }
 
     boolean find(int data) {
@@ -156,5 +146,61 @@ public class BinaryTree25 {
             }
             successor.left = current.left;
         }
+    }
+
+    // Method to find the minimum value
+    int findMin() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Tree is empty!");
+        }
+        Node25 current = root;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current.data;
+    }
+
+    // Method to find the maximum value
+    int findMax() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Tree is empty!");
+        }
+        Node25 current = root;
+        while (current.right != null) {
+            current = current.right;
+        }
+        return current.data;
+    }
+
+    // Method to display leaf nodes
+    void displayLeaves(Node25 node) {
+        if (node != null) {
+            if (node.left == null && node.right == null) {
+                System.out.print(node.data + " ");
+            }
+            displayLeaves(node.left);
+            displayLeaves(node.right);
+        }
+    }
+
+    // Method to count the number of leaf nodes
+    int countLeaves(Node25 node) {
+        if (node == null) {
+            return 0;
+        }
+        if (node.left == null && node.right == null) {
+            return 1;
+        }
+        return countLeaves(node.left) + countLeaves(node.right);
+    }
+
+    // Method to start displaying leaf nodes
+    void displayLeaves() {
+        displayLeaves(root);
+    }
+
+    // Method to get the number of leaf nodes
+    int countLeaves() {
+        return countLeaves(root);
     }
 }
