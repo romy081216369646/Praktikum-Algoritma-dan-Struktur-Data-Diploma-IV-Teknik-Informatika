@@ -1,0 +1,31 @@
+public class Transaksi {
+    private static int nextId = 1;
+
+    private int kodeTransaksi;
+    private BarangRental barangRental;
+    private int jumlahBarang; 
+    private double hargaTotal;
+
+    public Transaksi(BarangRental barangRental, int jumlahBarang) {
+        this.kodeTransaksi = nextId++;
+        this.barangRental = barangRental;
+        this.jumlahBarang = jumlahBarang;
+        this.hargaTotal = barangRental.getBiayaSewa() * jumlahBarang;
+    }
+
+    public int getKodeTransaksi() {
+        return kodeTransaksi;
+    }
+
+    public BarangRental getBarangRental() {
+        return barangRental;
+    }
+
+    public int getJumlahBarang() {
+        return jumlahBarang;
+    }
+
+    public double getHargaTotal() {
+        return hargaTotal;
+    }
+}
