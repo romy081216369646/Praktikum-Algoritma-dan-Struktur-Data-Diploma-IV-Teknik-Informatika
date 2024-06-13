@@ -1,0 +1,102 @@
+import java.util.Scanner;
+
+public class RentalKendaraanApp {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        LinkedList<BarangRental> kendaraanList = new LinkedList<>();
+
+        kendaraanList.add(new BarangRental("Honda Beat", "Motor", 2017, 25000));
+        kendaraanList.add(new BarangRental("Honda Vario", "Motor", 2018, 25000));
+        kendaraanList.add(new BarangRental("Toyota Yaris", "Mobil", 2022, 40000));
+        kendaraanList.add(new BarangRental("Toyota Innova", "Mobil", 2019, 40000));
+        kendaraanList.add(new BarangRental("Toyota Avanza", "Mobil", 2021, 40000));
+
+        LinkedList<Transaksi> transaksiList = new LinkedList<>();
+
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Daftar Kendaraan");
+            System.out.println("2. Peminjaman");
+            System.out.println("3. Tampilkan Seluruh Transaksi");
+            System.out.println("4. Keluar");
+            System.out.print("Pilih (1-4): ");
+            int choice = input.nextInt();
+            input.nextLine(); 
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nDaftar Kendaraan Rental Serba Serbi:");
+                    System.out.println("Nomor TNKB | Nama Kendaraan | Jenis | Tahun | Biaya Sewa Perjam");
+                    for (BarangRental barang : kendaraanList) {
+                        System.out.printf("%-10d | %-15s | %-5s | %-4d | %.0f%n",
+                                barang.getNoTNKB(), barang.getNamaKendaraan(), barang.getJenisKendaraan(),
+                                barang.getTahun(), barang.getBiayaSewa());
+                    }
+                    break;
+                case 2:
+                    System.out.println("Masukkan Data Peminjaman");
+                    System.out.print("Masukkan Nomor TNKB Kendaraan: ");
+                    int nomorTNKBInput = input.nextInt();
+                    input.nextLine(); 
+
+                    BarangRental selectedBarang = null;
+                    for (BarangRental barang : kendaraanList) {
+                        if (barang.getNoTNKB() == nomorTNKBInput) {
+                            selectedBarang = barang;
+                            break;
+                        }
+                    }
+
+                    if (selectedBarang == null) {
+                        System.out.println("Kendaraan dengan Nomor TNKB tersebut tidak ditemukan.");
+                    } else {
+                        System.out.print("Masukkan Lama Pinjam (dalam jam): ");
+                        int lamaPinjam = input.nextInt();
+                        input.nextLine(); 
+                        System.out.print("Apakah Member (ya/tidak): ");
+                        String isMember = input.nextLine();
+
+                        Transaksi newTransaksi = new Transaksi(selectedBarang, lamaPinjam);
+
+                        if (isMember.equalsIgnoreCase("ya")) {
+                            newTransaksi = applyMemberDiscount(newTransaksi);
+                        }
+
+                        transaksiList.add(newTransaksi);
+
+                        System.out.println("\nTransaksi Berhasil!");
+                        System.out.println("Nomor TNKB Kendaraan: " + selectedBarang.getNoTNKB());
+                        System.out.println("Nama Kendaraan: " + selectedBarang.getNamaKendaraan());
+                        System.out.println("Lama Pinjam: " + lamaPinjam + " jam");
+                        System.out.printf("Total Biaya: %.0f%n", newTransaksi.getHargaTotal());
+                    }
+                    break;
+                case 3:
+                    System.out.println("\nDaftar Seluruh Transaksi Peminjaman Rental Serba Serbi:");
+                    System.out.println("| Kode Transaksi | No TNKB | Nama Barang | Jenis | Lama Pinjam | Total Biaya");
+                    for (Transaksi transaksi : transaksiList) {
+                        System.out.printf("| %-14d | %-7d | %-15s | %-5s | %-11d | %.0f%n",
+                                transaksi.getKodeTransaksi(), transaksi.getBarangRental().getNoTNKB(),
+                                transaksi.getBarangRental().getNamaKendaraan(), transaksi.getBarangRental().getJenisKendaraan(),
+                                transaksi.getJumlahBarang(), transaksi.getHargaTotal());
+                    }
+                    break;
+                case 4:
+                    exit = true;
+                    System.out.println("Terima kasih telah menggunakan aplikasi kami!");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan pilih 1-4.");
+            }
+        }
+    }
+
+    private static Transaksi applyMemberDiscount(Transaksi transaksi) {
+        double hargaTotal = transaksi.getHargaTotal();
+        hargaTotal -= 25000; 
+        transaksi = new Transaksi(transaksi.getBarangRental(), transaksi.getJumlahBarang());
+        return transaksi;
+    }
+}
