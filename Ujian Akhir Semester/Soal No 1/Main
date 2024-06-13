@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        BarangRental mobil1 = new BarangRental("B 1234 ABC", "Avanza", "Mobil", 2020, 200000);
+        BarangRental motor1 = new BarangRental("N 5678 XYZ", "Beat", "Motor", 2019, 100000);
+
+        TransaksiRental transaksi1 = new TransaksiRental("Agus", 7, mobil1);
+
+        System.out.println("Transaksi Berhasil!");
+        System.out.println("Kode Transaksi: " + transaksi1.getKodeTransaksi());
+        System.out.println("Nama Peminjam: " + transaksi1.getNamaPeminjam());
+        System.out.println("Lama Pinjam (hari): " + transaksi1.getLamaPinjam());
+        System.out.println("Total Biaya: Rp " + transaksi1.getTotalBiaya());
+
+        TransaksiRental transaksi2 = new TransaksiRental("Budi", 5, motor1);
+
+        System.out.println("\nTransaksi Berhasil!");
+        System.out.println("Kode Transaksi: " + transaksi2.getKodeTransaksi());
+        System.out.println("Nama Peminjam: " + transaksi2.getNamaPeminjam());
+        System.out.println("Lama Pinjam (hari): " + transaksi2.getLamaPinjam());
+        System.out.println("Total Biaya: Rp " + transaksi2.getTotalBiaya());
+
+        scanner.close();
+    }
+}
